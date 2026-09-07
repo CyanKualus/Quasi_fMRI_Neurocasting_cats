@@ -51,6 +51,41 @@ study; replace it with your own path. Supply your own XDF recordings for EEG
 and EMG, or H5 recordings for EEG only. Participant recordings and generated
 diagnostics are not included in this repository.
 
+## Portable Windows executable
+
+Run `build_windows.bat` to build `dist/NeuroCasting.exe` with the bundled
+kitten-with-cables picture as its Explorer, window, and taskbar icon. The build
+uses Python 3.12 from the Windows launcher when `.venv` does not yet exist,
+and installs `requirements-build.txt` into that environment. Alternatively:
+
+```powershell
+.\.venv\Scripts\python.exe -m pip install -r requirements-build.txt
+.\.venv\Scripts\python.exe -m PyInstaller --noconfirm NeuroCasting.spec
+```
+
+Copy the single executable to a writable folder and double-click it. Python
+does not need to be installed on the destination computer. The executable
+includes Qt, the numerical libraries, and the application assets. First launch
+can take a little longer while the bundle extracts. Settings are created as
+`neurocasting_settings.json` beside the executable, and relative output folders
+are resolved from that same location. Keep the settings and `output/` folder
+with the executable when moving an existing installation.
+
+The build is unsigned. Generated binaries stay in the Git-ignored `dist/`
+folder. To check the compiled GUI, assets, settings paths, H5 support, and an
+actual two-process EEG transform without participant data:
+
+```powershell
+$exe = (Resolve-Path .\dist\NeuroCasting.exe).Path
+$report = Join-Path (Split-Path $exe) "smoke-test.json"
+$process = Start-Process -FilePath $exe -ArgumentList "--smoke-test `"$report`"" -WindowStyle Hidden -Wait -PassThru
+Get-Content $report
+if ($process.ExitCode -ne 0) { throw "Executable smoke test failed" }
+```
+
+This check uses an isolated Qt profile and creates the default settings beside
+the executable if they do not exist.
+
 ## The four tabs
 
 **Start** — everything that changes from participant to participant, for both

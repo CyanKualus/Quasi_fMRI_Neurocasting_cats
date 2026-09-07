@@ -28,9 +28,10 @@ import numpy as np
 from scipy.signal import butter, iirnotch, resample_poly, sosfilt, tf2sos
 
 from shared.marker_shift import resolve_marker_shift
+from shared.runtime import application_dir
 
 
-PROJECT_DIR = Path(__file__).resolve().parent.parent
+PROJECT_DIR = application_dir()
 # Where saved figures and tables go, as a path *relative to the application*.
 #
 # It is deliberately not an absolute path. The root is written to the settings

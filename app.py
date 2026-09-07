@@ -45,6 +45,7 @@ from emgcasting.core import (DEFAULT_OUTPUT_ROOT as EMG_OUTPUT_ROOT,
                              ProcessingConfig as EMGConfig, parse_pair)
 from emg_view import EMGTab
 from shared import theme
+from shared.runtime import application_dir
 from shared.recordings import discover_recordings, participant_code
 
 PALETTE = theme.PALETTE
@@ -703,8 +704,7 @@ class NeuroCastingApp(QtWidgets.QMainWindow):
         super().__init__()
         self.settings = settings or QtCore.QSettings(
             "NeuroCasting", "NeuroCasting Quasi-fMRI")
-        self.config_path = config_path or os.path.join(
-            os.path.dirname(os.path.abspath(__file__)), SETTINGS_FILE_NAME)
+        self.config_path = config_path or str(application_dir() / SETTINGS_FILE_NAME)
         self._config_notes = []
         self.pipe = KLHPipeline()
         self.start_result = None
