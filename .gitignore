@@ -1,0 +1,49 @@
+# Python environments, bytecode, and test/build caches
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Local configuration and credentials
+/neurocasting_settings.json
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Participant recordings and generated analysis results
+/data/
+/recordings/
+/diagnostics/
+/output/
+/outputs/
+/results/
+*.xdf
+*.xdfz
+*.xdf.gz
+*.h5
+*.hdf5
+*.mat
+*.edf
+*.bdf
+*.fif
+*.set
+*.fdt
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+Desktop.ini
+*.log
